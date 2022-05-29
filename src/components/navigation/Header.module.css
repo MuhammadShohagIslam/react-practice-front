@@ -1,0 +1,9 @@
+.menu {
+    display: block !important;
+}
+.menu li span {
+    display: inline-flex !important;
+}
+.subMenu span{
+    display: inline-flex !important;
+}
