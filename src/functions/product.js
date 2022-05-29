@@ -32,12 +32,12 @@ export const getTotalProducts = async () =>
 
 // for getting single product
 export const getProduct = async (slug) =>
-    await axios.get(`${process.env.REACT_APP_API_URL}/product/${slug}`);
+    await axios.get(`${process.env.REACT_APP_API_URL}/products/${slug}`);
 
 // for update product
 export const updateProduct = async (authtoken, slug, updateProducts) => {
     return await axios.put(
-        `${process.env.REACT_APP_API_URL}/product/${slug}`,
+        `${process.env.REACT_APP_API_URL}/products/${slug}`,
         updateProducts,
         {
             headers: {
@@ -50,7 +50,7 @@ export const updateProduct = async (authtoken, slug, updateProducts) => {
 // for removing product
 export const deleteProduct = async (authtoken, slug) => {
     return await axios.delete(
-        `${process.env.REACT_APP_API_URL}/product/${slug}`,
+        `${process.env.REACT_APP_API_URL}/products/${slug}`,
         {
             headers: {
                 authtoken,
@@ -62,7 +62,7 @@ export const deleteProduct = async (authtoken, slug) => {
 // for ratings  product
 export const productRating = async (authtoken, productId, star) => {
     return await axios.post(
-        `${process.env.REACT_APP_API_URL}/product/rating/${productId}`,
+        `${process.env.REACT_APP_API_URL}/products/ratings/${productId}`,
         { star },
         {
             headers: {
