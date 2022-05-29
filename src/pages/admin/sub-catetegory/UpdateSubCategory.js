@@ -4,7 +4,7 @@ import { getListOfCategory } from "../../../functions/category";
 import {
     getSubCategory,
     updateSubCategory,
-} from "../../../functions/subCategory";
+} from "../../../functions/sub-category";
 import AdminNavigation from "../../../components/navigation/AdminNavigation";
 import CategoryForm from "../../../components/forms/CategoryForm";
 import { useSelector } from "react-redux";

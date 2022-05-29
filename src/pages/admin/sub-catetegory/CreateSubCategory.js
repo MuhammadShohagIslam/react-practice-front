@@ -8,7 +8,7 @@ import {
     createSubCategory,
     getAllSubCategories,
     deleteSubCategory,
-} from "../../../functions/subCategory";
+} from "../../../functions/sub-category";
 import { getListOfCategory } from "../../../functions/category";
 import { toast } from "react-toastify";
 import LocalSearch from "../../../components/forms/LocalSearch";
