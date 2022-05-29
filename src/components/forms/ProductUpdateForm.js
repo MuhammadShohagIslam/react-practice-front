@@ -23,10 +23,8 @@ const ProductUpdateForm = ({
         brands,
         brand,
         category,
-        subCategory,
     } = values;
 
-    console.log(brand);
     return (
         <form onSubmit={handleSubmitProduct}>
             <div className="form-group">
@@ -153,8 +151,6 @@ const ProductUpdateForm = ({
                         ))}
                 </Select>
             </div>
-            {JSON.stringify(category)}
-            {JSON.stringify(seletedCategory)}
 
             <br />
             <button className="btn btn-outline-info">

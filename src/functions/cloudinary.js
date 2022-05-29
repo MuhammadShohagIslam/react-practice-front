@@ -13,7 +13,7 @@ export const uploadingImageFile = (authtoken, uploadImageFile) => {
 };
 export const deletingImageFile = (authtoken, public_id) => {
     return axios.post(
-        `${process.env.REACT_APP_API_URL}/delete-images`,
+        `${process.env.REACT_APP_API_URL}/remove-images`,
         { public_id },
         {
             headers: {

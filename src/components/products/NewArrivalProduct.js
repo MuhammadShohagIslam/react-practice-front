@@ -54,7 +54,7 @@ const NewArrivalProduct = () => {
                         <Pagination
                             current={page}
                             onChange={(page) => setPage(page)}
-                            total={floorTotalProductLength}
+                            total={floorTotalProductLength ? floorTotalProductLength : 15}
                         />
                         </div>
                     </Col>

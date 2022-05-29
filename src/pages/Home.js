@@ -3,6 +3,7 @@ import BestSellerProduct from "../components/products/BestSellerProduct";
 import NewArrivalProduct from "../components/products/NewArrivalProduct";
 import Jumbotron from "../components/libs/Jumbotron";
 import CategoryHome from "./category/CategoryHome";
+import SubCategoryHome from "./sub-category/SubCategoryHome";
 
 const Home = () => {
     return (
@@ -24,9 +25,14 @@ const Home = () => {
             <BestSellerProduct />
 
             <h4 className="text-center p-3 mt-5 mb-5 display-6 jumbotron">
-                Categories
+                Category
             </h4>
             <CategoryHome />
+
+            <h4 className="text-center p-3 mt-5 mb-5 display-6 jumbotron">
+                Sub Category
+            </h4>
+            <SubCategoryHome />
 
             <br />
             <br />

@@ -15,7 +15,7 @@ export const createProduct = async (authtoken, productObject) => {
 
 // for getting products with number how many we want
 export const getProductsByCount = async (count) =>
-    await axios.get(`${process.env.REACT_APP_API_URL}/products/${count}`);
+    await axios.get(`${process.env.REACT_APP_API_URL}/products/count/${count}`);
 
 // for getting all products by sorting with pagination
 export const getProductsBySort = async (sort, order, page) => {
@@ -31,8 +31,9 @@ export const getTotalProducts = async () =>
     await axios.post(`${process.env.REACT_APP_API_URL}/products/total`);
 
 // for getting single product
-export const getProduct = async (slug) =>
-    await axios.get(`${process.env.REACT_APP_API_URL}/products/${slug}`);
+export const getProduct = async (slug) => {
+    return await axios.get(`${process.env.REACT_APP_API_URL}/products/${slug}`);
+};
 
 // for update product
 export const updateProduct = async (authtoken, slug, updateProducts) => {

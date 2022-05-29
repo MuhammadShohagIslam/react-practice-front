@@ -8,7 +8,6 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { createOrUpdateUser } from "./../../functions/auth";
-import { Navigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
 const Login = () => {
@@ -44,6 +43,7 @@ const Login = () => {
         // check if it's intended page or not
         if (intendedPage) {
             navigate(intendedPage.from);
+            return;
         } else {
             if (data && data.role === "admin") {
                 navigate("/admin/dashboard");

@@ -35,9 +35,8 @@ const UpdateSubCategory = () => {
 
     const loadSingleSubCategories = async (slug) => {
         getSubCategory(slug).then((res) => {
-            console.log(res.data.parent)
-            setUpdateSubCategoryName(res.data.name);
-            setParentCategory(res.data.parent);
+            setUpdateSubCategoryName(res.data.subCategory.name);
+            setParentCategory(res.data.subCategory.parent);
         });
     };
 

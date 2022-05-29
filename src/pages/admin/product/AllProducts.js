@@ -59,7 +59,7 @@ const AllProducts = () => {
                         {products &&
                             products.length &&
                             products.map((product) => (
-                                <Col span={6} key={product._id}>
+                                <Col span={8} key={product._id} className="mb-3">
                                     <AdminProductCard
                                         product={product}
                                         handleRemoveProduct={

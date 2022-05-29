@@ -41,6 +41,17 @@ span.avatar-item {
 .category-list li:hover{
     color: cornflowerblue;
 }
+.sub-category-list{
+    display: inline-block;
+}
+.sub-category-list li{
+    list-style-type: none;
+    font-size: 22px;
+    color: black;
+}
+.sub-category-list li:hover{
+    color: cornflowerblue;
+}
 .list-group .list-group-item{
     font-size: 16px;
     font-weight: 500;

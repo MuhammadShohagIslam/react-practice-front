@@ -10,7 +10,7 @@ import {
 } from "../../../functions/category";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import ImageFileUploadForm from './../../../components/forms/ImageFileUploadForm';
+import ImageFileUploadForm from "./../../../components/forms/ImageFileUploadForm";
 
 const initialValues = {
     title: "",
@@ -39,10 +39,11 @@ const UpdateProduct = () => {
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = useParams();
     const navigate = useNavigate();
+
     useEffect(() => {
         loadingProduct();
         loadingCategory();
-    }, []);
+    }, [slug]);
 
     const loadingProduct = () => {
         getProduct(slug)

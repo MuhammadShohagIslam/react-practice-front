@@ -19,7 +19,7 @@ const UpdateCategory = () => {
     useEffect(() => {
         const handleShowCategory = async () =>
             getSingleCategory(slug).then((res) => {
-                setUpdateCategoryName(res.data.name);
+                setUpdateCategoryName(res.data.category.name);
             });
         handleShowCategory();
     }, [slug]);

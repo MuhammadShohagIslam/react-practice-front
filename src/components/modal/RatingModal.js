@@ -14,7 +14,7 @@ const RatingModal = ({ children, slug }) => {
         if (user && user.token) {
             setVisible(true);
         } else {
-            navigate("/login", { state: { from: `/product/${slug}` } });
+            navigate("/login", { state: { from: `/products/${slug}` } });
         }
     };
 

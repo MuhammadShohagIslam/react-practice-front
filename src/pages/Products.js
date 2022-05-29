@@ -20,12 +20,19 @@ const Products = () => {
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = useParams();
 
+    // slider
+
     const loadProduct = useCallback(() => {
         setLoading(true);
-        getProduct(slug).then((res) => {
-            setProduct(res.data);
-            setLoading(false);
-        });
+        getProduct(slug)
+            .then((res) => {
+                setProduct(res.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
     }, [slug]);
 
     useEffect(() => {
@@ -67,12 +74,16 @@ const Products = () => {
                     star={star}
                 />
             </div>
-            <div className="ralated-product">
+
+            <div className="ralated-product mt-5">
+                <h4 className="text-center p-3 mt-5 mb-4 display-6 jumbotron">
+                    Related Product
+                </h4>
                 <Row gutter={16}>
                     {relProducts &&
                         relProducts.length > 0 &&
                         relProducts.map((relProduct) => (
-                            <Col span={8} key={relProduct._id}>
+                            <Col  span={8} key={relProduct._id}>
                                 <ProductCard product={relProduct} />
                             </Col>
                         ))}

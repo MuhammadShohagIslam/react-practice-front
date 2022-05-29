@@ -5,7 +5,7 @@ const CategoryList = ({ category }) => {
 
     return (
         <ul className="category-list">
-            <Link to={`/products/category/${slug}`}>
+            <Link to={`/products/categories/${slug}`}>
                 <li>{name}</li>
             </Link>
         </ul>

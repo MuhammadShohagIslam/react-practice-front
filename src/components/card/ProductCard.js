@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
                     />
                 }
                 actions={[
-                    <Link to={`/product/${slug}`} className="text-warning">
+                    <Link to={`/products/${slug}`} className="text-warning">
                         <EyeOutlined /> <br /> View Product
                     </Link>,
                     <Link to={`/products/${slug}`} className="text-danger">

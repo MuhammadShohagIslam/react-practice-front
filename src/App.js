@@ -28,6 +28,7 @@ import UpdateProduct from "./pages/admin/product/UpdateProduct";
 import CategoryProduct from './pages/category/CategoryProduct';
 // import SingleProduct from "./pages/products/SingleProduct";
 import Products from './pages/Products';
+import SubCategoryProducts from './pages/sub-category/SubCategoryProducts';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -109,8 +110,9 @@ const App = () => {
                         element={<UpdateProduct />}
                     />
                 </Route>
-                <Route path="/products/category/:slug" element={<CategoryProduct />} />
-                <Route path="/product/:slug" element={<Products />} />
+                <Route path="products/:slug" element={<Products />} />
+                <Route path="/products/categories/:slug" element={<CategoryProduct />} />
+                <Route path="/products/sub-categories/:slug" element={<SubCategoryProducts />} />
             </Routes>
         </Fragment>
     );
