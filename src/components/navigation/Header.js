@@ -8,11 +8,14 @@ import {
     UserOutlined,
     UserAddOutlined,
     LogoutOutlined,
+    ShoppingOutlined,
+    SearchOutlined
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import SearchFilter from './../forms/SearchFilter';
 
 const Header = () => {
     const [current, setCurrent] = useState("home");
@@ -44,6 +47,11 @@ const Header = () => {
             key: "home",
             icon: <AppstoreOutlined />,
         },
+        {
+            label: <Link to="/shop">Shop</Link>,
+            key: "shop",
+            icon: <ShoppingOutlined />,
+        },
         !user && {
             label: <Link to="/register">Register</Link>,
             key: "register",
@@ -73,24 +81,22 @@ const Header = () => {
                     className: classes.subMenu,
                 },
                 user.role === "admin" && {
-                    label: (
-                        <Link to="/admin/dashboard">
-                            Dashboard
-                        </Link>
-                    ),
+                    label: <Link to="/admin/dashboard">Dashboard</Link>,
                     key: "dashboard",
                     className: classes.subMenu,
                 },
                 user.role === "subscriber" && {
-                    label: (
-                        <Link to="/user/history">
-                            History
-                        </Link>
-                    ),
+                    label: <Link to="/user/history">History</Link>,
                     key: "histroy",
                     className: classes.subMenu,
                 },
             ],
+        },
+        {
+            type:"group",
+            label: <SearchFilter/>,
+            key: "search",
+            className: `float-end`,
         },
     ];
 
@@ -103,7 +109,9 @@ const Header = () => {
                 selectedKeys={[current]}
                 items={items}
                 className={classes.menu}
-            />
+            >
+            </Menu>
+            
         </div>
     );
 };

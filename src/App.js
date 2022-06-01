@@ -25,10 +25,11 @@ import UpdateSubCategory from "./pages/admin/sub-catetegory/UpdateSubCategory";
 import CreateProduct from "./pages/admin/product/CreateProduct";
 import AllProducts from "./pages/admin/product/AllProducts";
 import UpdateProduct from "./pages/admin/product/UpdateProduct";
-import CategoryProduct from './pages/category/CategoryProduct';
+import CategoryProduct from "./pages/category/CategoryProduct";
 // import SingleProduct from "./pages/products/SingleProduct";
-import Products from './pages/Products';
-import SubCategoryProducts from './pages/sub-category/SubCategoryProducts';
+import Products from "./pages/Products";
+import SubCategoryProducts from "./pages/sub-category/SubCategoryProducts";
+import Shop from "./pages/Shop";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -68,6 +69,7 @@ const App = () => {
                 {/* <Route path="/*" element={<PublicRoute />}>
                     <Route path="login" element={<Login />} />
                 </Route> */}
+                <Route path="/shop" element={<Shop />} />
                 <Route path="login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
@@ -111,8 +113,14 @@ const App = () => {
                     />
                 </Route>
                 <Route path="products/:slug" element={<Products />} />
-                <Route path="/products/categories/:slug" element={<CategoryProduct />} />
-                <Route path="/products/sub-categories/:slug" element={<SubCategoryProducts />} />
+                <Route
+                    path="/products/categories/:slug"
+                    element={<CategoryProduct />}
+                />
+                <Route
+                    path="/products/sub-categories/:slug"
+                    element={<SubCategoryProducts />}
+                />
             </Routes>
         </Fragment>
     );

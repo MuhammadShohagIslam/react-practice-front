@@ -25,35 +25,71 @@ span.avatar-item {
 .ant-skeleton-element {
     width: 100% !important;
 }
-.pagination-area{
+.pagination-area {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
-.category-list{
+.category-list {
     display: inline-block;
 }
-.category-list li{
+.category-list li {
     list-style-type: none;
     font-size: 22px;
     color: black;
 }
-.category-list li:hover{
+.category-list li:hover {
     color: cornflowerblue;
 }
-.sub-category-list{
+.sub-category-list {
     display: inline-block;
 }
-.sub-category-list li{
+.sub-category-list li {
     list-style-type: none;
     font-size: 22px;
     color: black;
 }
-.sub-category-list li:hover{
+.sub-category-list li:hover {
     color: cornflowerblue;
 }
-.list-group .list-group-item{
+.list-group .list-group-item {
     font-size: 16px;
     font-weight: 500;
     border: none;
+}
+.searchInput {
+    height: 34px;
+    border: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid transparent;
+}
+.searchInput:hover {
+    border-bottom: 1px solid #1890ff;
+    transition: ease-in-out, border-bottom 0.35s ease-in-out;
+}
+.searchInput:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.075) inset, 0 0 3px #1890ff;
+    outline: 0 none;
+}
+.searchInputIcon {
+    cursor: pointer !important;
+    position: relative !important;
+    left: -25px;
+    top: 11px;
+}
+.searchInputIcon:hover {
+    color: #1890ff;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: white !important;
+}
+.ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-item, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-vertical .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+.menu-item {
+    height: fit-content !important;
+    padding-bottom: 10px !important;
+    margin-top: 0px;
 }
