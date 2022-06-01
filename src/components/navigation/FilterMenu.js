@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Menu, Slider } from "antd";
-import { DollarOutlined, DownCircleOutlined } from "@ant-design/icons";
+import {
+    DollarOutlined,
+    AppstoreAddOutlined,
+    StarFilled,
+    ShopOutlined,
+} from "@ant-design/icons";
 
 const FilterMenu = ({
     price,
     onAfterPriceChangeHandler,
     checkboxCategories,
+    starRatingFilter,
     checkboxSubCategories,
+    checkboxBrands,
+    checkboxColor,
+    checkboxShipping,
 }) => {
-    const [openKeys, setOpenKeys] = useState(["1", "2", "3"]);
-
     const items = [
         {
             label: "Price",
@@ -34,7 +41,7 @@ const FilterMenu = ({
         {
             label: "Category",
             key: "2",
-            icon: <DownCircleOutlined />,
+            icon: <AppstoreAddOutlined />,
             children: [
                 {
                     label: <div>{checkboxCategories()}</div>,
@@ -43,9 +50,20 @@ const FilterMenu = ({
             ],
         },
         {
-            label: "Sub-Category",
+            label: "Ratings",
             key: "3",
-            icon: <DownCircleOutlined />,
+            icon: <StarFilled />,
+            children: [
+                {
+                    label: starRatingFilter(),
+                    className: "menu-item-star-rating",
+                },
+            ],
+        },
+        {
+            label: "Sub-Category",
+            key: "4",
+            icon: <AppstoreAddOutlined />,
             children: [
                 {
                     label: <div>{checkboxSubCategories()}</div>,
@@ -53,24 +71,55 @@ const FilterMenu = ({
                 },
             ],
         },
+        {
+            label: "Brands",
+            key: "brand",
+            icon: <AppstoreAddOutlined />,
+            children: [
+                {
+                    label: <div>{checkboxBrands()}</div>,
+                    className: "menu-item",
+                },
+            ],
+        },
+        {
+            label: "Colors",
+            key: "5",
+            icon: <AppstoreAddOutlined />,
+            children: [
+                {
+                    label: <div>{checkboxColor()}</div>,
+                    className: "menu-item",
+                },
+            ],
+        },
+        {
+            label: "Shipping",
+            key: "6",
+            icon: <ShopOutlined />,
+            children: [
+                {
+                    label: <div>{checkboxShipping()}</div>,
+                    className: "menu-item",
+                },
+            ],
+        },
     ];
 
-    const rootSubmenuKeys = ["1", "2", "3"];
-    const onOpenChange = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    // const rootSubmenuKeys = ["1", "2", "3", "4", "5"];
+    // const onOpenChange = (keys) => {
+    //     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
 
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
-    };
+    //     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //         setOpenKeys(keys);
+    //     } else {
+    //         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    //     }
+    // };
     return (
         <Menu
             mode="inline"
-            defaultSelectedKeys={["1", "2", "3"]}
-            openKeys={openKeys}
-            onOpenChange={onOpenChange}
+            defaultOpenKeys={["1", "2", "3", "4", "5", "6"]}
             items={items}
             className=""
         />

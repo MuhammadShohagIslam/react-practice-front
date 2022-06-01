@@ -9,7 +9,6 @@ import {
     UserAddOutlined,
     LogoutOutlined,
     ShoppingOutlined,
-    SearchOutlined
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
