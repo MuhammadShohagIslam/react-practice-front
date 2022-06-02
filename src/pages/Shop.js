@@ -245,8 +245,8 @@ const Shop = () => {
     const checkboxBrands = () =>
         brandArray &&
         brandArray.length &&
-        brandArray.map((b) => (
-            <div key={b}>
+        brandArray.map((b, i) => (
+            <div key={i}>
                 <Checkbox
                     onChange={handleBrandChange}
                     value={b}
@@ -279,8 +279,8 @@ const Shop = () => {
     const checkboxColor = () =>
         colorArray &&
         colorArray.length &&
-        colorArray.map((c) => (
-            <div key={c}>
+        colorArray.map((c, i) => (
+            <div key={i}>
                 <Checkbox
                     onChange={handleColorChange}
                     value={c}

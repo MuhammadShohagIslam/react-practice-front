@@ -1,4 +1,7 @@
-import { Row, Col, Card, Tabs } from "antd";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from "react";
+import _ from "lodash";
+import { Row, Col, Card, Tabs, Tooltip } from "antd";
 import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
 import CardCarousel from "../card/CardCarousel";
@@ -7,10 +10,41 @@ import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import { avgRating } from "../../functions/avgRating";
 import Laptop from "../../images/aircx7.jpg";
 import RatingModal from "../modal/RatingModal";
+import { useDispatch } from "react-redux";
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, handleClickRating, star }) => {
+    const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
     const { title, images, description, slug, _id } = product;
+    const dispatch = useDispatch();
+
+    const handleAddCart = () => {
+        let carts = [];
+
+        if (typeof window !== "undefined") {
+            if (window.localStorage.getItem("carts")) {
+                carts = JSON.parse(window.localStorage.getItem("carts"));
+            }
+        }
+        // push carts into carts array
+        carts.push({
+            ...product,
+            count: 1,
+        });
+
+        // remove duplicates value
+        const uniqueCarts = _.uniqWith(carts, _.isEqual);
+
+        // set data local storage
+        window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
+        setTooltipTitle("Added!");
+
+        // data store to the redux
+        dispatch({
+            type: "ADD_CART",
+            payload: uniqueCarts,
+        });
+    };
 
     return (
         <Row gutter={24}>
@@ -40,11 +74,13 @@ const SingleProduct = ({ product, handleClickRating, star }) => {
                 )}
                 <Card
                     actions={[
-                        <>
-                            <ShoppingCartOutlined className="text-success" />{" "}
-                            <br />
-                            Add to Cart
-                        </>,
+                        <Tooltip title={tooltipTitle}>
+                            <a onClick={handleAddCart}>
+                                <ShoppingCartOutlined className="text-success" />{" "}
+                                <br />
+                                Add to Cart
+                            </a>{" "}
+                        </Tooltip>,
                         <Link to="/">
                             <HeartOutlined className="text-info" /> <br /> Add
                             to Wishlist

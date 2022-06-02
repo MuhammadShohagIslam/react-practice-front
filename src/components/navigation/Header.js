@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import classes from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -9,17 +9,18 @@ import {
     UserAddOutlined,
     LogoutOutlined,
     ShoppingOutlined,
+    ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
-import SearchFilter from './../forms/SearchFilter';
+import SearchFilter from "./../forms/SearchFilter";
 
 const Header = () => {
     const [current, setCurrent] = useState("home");
     // redux user state
-    const { user } = useSelector((state) => ({ ...state }));
+    const { user, carts } = useSelector((state) => ({ ...state }));
     // redux disfatch
     const dispatch = useDispatch();
     // for redirect another page
@@ -50,6 +51,17 @@ const Header = () => {
             label: <Link to="/shop">Shop</Link>,
             key: "shop",
             icon: <ShoppingOutlined />,
+        },
+        {
+            label: (
+                <Link to="/cart">
+                    <Badge count={carts.length} offset={[11, 1]}>
+                        Cart{" "}
+                    </Badge>
+                </Link>
+            ),
+            key: "cart",
+            icon: <ShoppingCartOutlined />,
         },
         !user && {
             label: <Link to="/register">Register</Link>,
@@ -92,8 +104,8 @@ const Header = () => {
             ],
         },
         {
-            type:"group",
-            label: <SearchFilter/>,
+            type: "group",
+            label: <SearchFilter />,
             key: "search",
             className: `float-end`,
         },
@@ -108,9 +120,7 @@ const Header = () => {
                 selectedKeys={[current]}
                 items={items}
                 className={classes.menu}
-            >
-            </Menu>
-            
+            ></Menu>
         </div>
     );
 };

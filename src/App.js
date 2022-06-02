@@ -30,6 +30,7 @@ import CategoryProduct from "./pages/category/CategoryProduct";
 import Products from "./pages/Products";
 import SubCategoryProducts from "./pages/sub-category/SubCategoryProducts";
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const App = () => {
                     <Route path="login" element={<Login />} />
                 </Route> */}
                 <Route path="/shop" element={<Shop />} />
+                <Route path="/cart" element={<Cart />} />
                 <Route path="login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />

@@ -55,6 +55,7 @@ const FilterMenu = ({
             icon: <StarFilled />,
             children: [
                 {
+                    key:"ratings",
                     label: starRatingFilter(),
                     className: "menu-item-star-rating",
                 },
@@ -66,6 +67,7 @@ const FilterMenu = ({
             icon: <AppstoreAddOutlined />,
             children: [
                 {
+                    key:"subcategory",
                     label: <div>{checkboxSubCategories()}</div>,
                     className: "menu-item",
                 },
@@ -73,10 +75,11 @@ const FilterMenu = ({
         },
         {
             label: "Brands",
-            key: "brand",
+            key: "5",
             icon: <AppstoreAddOutlined />,
             children: [
                 {
+                    key: "brand",
                     label: <div>{checkboxBrands()}</div>,
                     className: "menu-item",
                 },
@@ -84,10 +87,11 @@ const FilterMenu = ({
         },
         {
             label: "Colors",
-            key: "5",
+            key: "6",
             icon: <AppstoreAddOutlined />,
             children: [
                 {
+                    key:"colors",
                     label: <div>{checkboxColor()}</div>,
                     className: "menu-item",
                 },
@@ -95,10 +99,11 @@ const FilterMenu = ({
         },
         {
             label: "Shipping",
-            key: "6",
+            key: "7",
             icon: <ShopOutlined />,
             children: [
                 {
+                    key:"shipping",
                     label: <div>{checkboxShipping()}</div>,
                     className: "menu-item",
                 },
@@ -119,7 +124,7 @@ const FilterMenu = ({
     return (
         <Menu
             mode="inline"
-            defaultOpenKeys={["1", "2", "3", "4", "5", "6"]}
+            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
             items={items}
             className=""
         />
