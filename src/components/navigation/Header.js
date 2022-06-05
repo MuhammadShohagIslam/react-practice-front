@@ -20,7 +20,8 @@ import SearchFilter from "./../forms/SearchFilter";
 const Header = () => {
     const [current, setCurrent] = useState("home");
     // redux user state
-    const { user, carts } = useSelector((state) => ({ ...state }));
+    const { userCarts, user } = useSelector((state) => ({ ...state }));
+    const { carts } = userCarts;
     // redux disfatch
     const dispatch = useDispatch();
     // for redirect another page

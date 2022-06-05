@@ -156,7 +156,7 @@ const Login = () => {
             <br />
             <button
                 onClick={handleSubmit}
-                className={` mb-3 btn btn-outline-primary`}
+                className="mb-3 btn btn-outline-info"
                 style={{ width: "100%" }}
                 disabled={!email || password.length < 6}
             >

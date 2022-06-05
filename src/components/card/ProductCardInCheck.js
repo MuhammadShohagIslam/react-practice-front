@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const colorArray = ["Green", "Black", "Red", "White"];
 
-const ProductCardInCheckBox = ({ product }) => {
+const ProductCardInCheck = ({ product }) => {
     const [countNumber, setCountNumber] = useState(product.count);
     const { images, title, shipping, color, brand, price, quantity } = product;
     const dispatch = useDispatch();
@@ -148,7 +148,6 @@ const ProductCardInCheckBox = ({ product }) => {
                     max={quantity}
                     className="form-control"
                     value={countNumber}
-                    name="count"
                     onChange={handleNumberChange}
                 />
             </td>
@@ -169,4 +168,4 @@ const ProductCardInCheckBox = ({ product }) => {
     );
 };
 
-export default ProductCardInCheckBox;
+export default ProductCardInCheck;

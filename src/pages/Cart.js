@@ -1,11 +1,16 @@
+import {useState} from 'react';
 import { Col, Row } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import ProductCardInCheckBox from "./../components/card/ProductCardInCheckBox";
+import { Link, useNavigate } from "react-router-dom";
+import ProductCardInCheck from "./../components/card/ProductCardInCheck";
+import { saveOrder } from "./../functions/user";
 
 const Cart = () => {
-    const { carts, user } = useSelector((state) => ({ ...state }));
+    const [loading, setLoading] = useState(false);
+    const { userCarts, user } = useSelector((state) => ({ ...state }));
+    const { carts } = userCarts;
+    const navigate = useNavigate();
 
     const showCartItems = () => (
         <table className="table align-middle">
@@ -27,7 +32,7 @@ const Cart = () => {
                 {carts &&
                     carts.length &&
                     carts.map((cart) => (
-                        <ProductCardInCheckBox key={cart._id} product={cart} />
+                        <ProductCardInCheck key={cart._id} product={cart} />
                     ))}
             </tbody>
         </table>
@@ -40,6 +45,19 @@ const Cart = () => {
                 return acc + cur.price * cur.count;
             }, 0);
         return totalPrice;
+    };
+
+    const saveOrderToDb = () => {
+        setLoading(true);
+        saveOrder(carts, user.token).then((res) => {
+            if (res.data.ok) {
+                setLoading(false);
+                navigate("/user/checkout");
+            }
+        }).catch(error => {
+            setLoading(false);
+            console.log(error)
+        })
     };
 
     return (
@@ -76,10 +94,11 @@ const Cart = () => {
                     <hr />
                     {user ? (
                         <button
-                            className="btn btn-sm btn-primary mt-2"
+                            className="btn btn-sm btn-outline-info  mt-2"
                             disabled={!carts.length}
+                            onClick={saveOrderToDb}
                         >
-                            Procced To Checkout
+                            {loading ? "Processing" : "Procced To Checkout"}
                         </button>
                     ) : (
                         <Link
@@ -90,7 +109,7 @@ const Cart = () => {
                         >
                             {" "}
                             <button
-                                className="btn btn-sm btn-primary mt-2"
+                                className="btn btn-sm btn-outline-info mt-2"
                                 disabled={!carts.length}
                             >
                                 Login To Checkout

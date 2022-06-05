@@ -6,6 +6,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import { Fragment } from "react";
 import Header from "./components/navigation/Header";
+import CartDrawer from "./components/drawer/CartDrawer";
 import CompleteRegistration from "./pages/auth/CompleteRegistration";
 import { useDispatch } from "react-redux";
 import { auth } from "./firebase";
@@ -31,6 +32,9 @@ import Products from "./pages/Products";
 import SubCategoryProducts from "./pages/sub-category/SubCategoryProducts";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
+import Checkout from './pages/Checkout';
+import CreateCoupon from './pages/admin/coupon/CreateCoupon';
+import Payment from './pages/Payment';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -61,10 +65,12 @@ const App = () => {
         // cleanup
         return () => unsubscriber();
     }, [dispatch]);
+    
     return (
         <Fragment>
             <ToastContainer />
             <Header />
+            <CartDrawer />
             <Routes>
                 <Route path="/" element={<Home />} />
                 {/* <Route path="/*" element={<PublicRoute />}>
@@ -80,9 +86,11 @@ const App = () => {
                     element={<CompleteRegistration />}
                 />
                 <Route path="/forgot/password" element={<ForgotPassword />} />
+                <Route path="/user/checkout" element={<Checkout />} />
 
                 <Route path="/*" element={<UserRoute />}>
                     <Route path="user/history" element={<History />} />
+                    <Route path="user/payment" element={<Payment />} />
                     <Route
                         path="user/update-password"
                         element={<UpdatePassword />}
@@ -112,6 +120,10 @@ const App = () => {
                     <Route
                         path="admin/products/:slug"
                         element={<UpdateProduct />}
+                    />
+                    <Route
+                        path="admin/coupon"
+                        element={<CreateCoupon />}
                     />
                 </Route>
                 <Route path="products/:slug" element={<Products />} />

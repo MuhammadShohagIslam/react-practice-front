@@ -68,7 +68,7 @@ const Register = () => {
                 autoFocus
             />
             <br />
-            <button type="submit" className="btn btn-outline-primary">
+            <button type="submit" className="btn btn-outline-info">
                 {loading ? "Loading" : "Register"}
             </button>
         </form>

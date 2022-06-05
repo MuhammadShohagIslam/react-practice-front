@@ -40,6 +40,12 @@ const ProductCard = ({ product }) => {
             type: "ADD_CART",
             payload: uniqueCarts,
         });
+        // show drawer carts in the side bar
+        dispatch({
+            type: "VISIBLE_DRAWER",
+            payload: true,
+        });
+
     };
     return (
         <>
