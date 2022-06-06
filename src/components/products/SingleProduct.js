@@ -15,7 +15,7 @@ const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, handleClickRating, star }) => {
     const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
-    const { title, images, description, slug, _id } = product;
+    const { title, images, description, slug, _id, quantity } = product;
     const dispatch = useDispatch();
 
     const handleAddCart = () => {
@@ -43,6 +43,12 @@ const SingleProduct = ({ product, handleClickRating, star }) => {
         dispatch({
             type: "ADD_CART",
             payload: uniqueCarts,
+        });
+        
+        // show drawer carts in the side bar
+        dispatch({
+            type: "VISIBLE_DRAWER",
+            payload: true,
         });
     };
 
@@ -75,11 +81,15 @@ const SingleProduct = ({ product, handleClickRating, star }) => {
                 <Card
                     actions={[
                         <Tooltip title={tooltipTitle}>
-                            <a onClick={handleAddCart}>
+                            <button
+                                className="addToCart"
+                                onClick={handleAddCart}
+                                disabled={quantity < 1}
+                            >
                                 <ShoppingCartOutlined className="text-success" />{" "}
                                 <br />
-                                Add to Cart
-                            </a>{" "}
+                                {quantity < 1 ? "Out Of Stock" : "Add To Cart"}
+                            </button>{" "}
                         </Tooltip>,
                         <Link to="/">
                             <HeartOutlined className="text-info" /> <br /> Add

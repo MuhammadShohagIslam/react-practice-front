@@ -60,3 +60,28 @@ export const getTotalPriceAfterDiscount = (couponName, authtoken) => {
         }
     );
 };
+
+// creating new order with payment intants
+export const createOrder = (paymentIntents, authtoken) => {
+    return axios.post(
+        `${process.env.REACT_APP_API_URL}/user/carts/order`,
+        { paymentIntents },
+        {
+            headers: {
+                authtoken,
+            },
+        }
+    );
+};
+
+// getting all orders by user
+export const getOrdersByUser = async (authtoken) => {
+    return await axios.get(
+        `${process.env.REACT_APP_API_URL}/user/carts/orders`,
+        {
+            headers: {
+                authtoken,
+            },
+        }
+    );
+};

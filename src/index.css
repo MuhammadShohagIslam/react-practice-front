@@ -130,6 +130,11 @@ span.avatar-item {
     width: 100px;
     height: auto;
 }
-/* tbody, td, tfoot, th, thead, tr {
-    vertical-align: middle;
-} */
+
+.addToCart {
+    border: none !important;
+    background: none !important;
+}
+.addToCart:focus {
+    outline: none !important;
+}

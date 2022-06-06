@@ -10,7 +10,7 @@ const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
     const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
-    const { slug, title, images, description } = product;
+    const { slug, title, images, description, quantity } = product;
     const dispatch = useDispatch();
 
     const handleAddCart = (e) => {
@@ -67,9 +67,9 @@ const ProductCard = ({ product }) => {
                         <EyeOutlined /> <br /> View Product
                     </Link>,
                     <Tooltip title={tooltipTitle}>
-                        <a className="text-danger" onClick={handleAddCart}>
-                            <ShoppingCartOutlined /> <br /> Add To Cart
-                        </a>
+                        <button className="text-danger addToCart" onClick={handleAddCart} disabled={quantity < 1}>
+                            <ShoppingCartOutlined /> <br />{quantity < 1 ? "Out Of Stock" : "Add To Cart"} 
+                        </button>
                     </Tooltip>,
                 ]}
             >

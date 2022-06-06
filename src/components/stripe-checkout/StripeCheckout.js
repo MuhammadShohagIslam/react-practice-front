@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "./../../functions/stripe";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./stripe.css";
 import { Link } from "react-router-dom";
-import { Card } from 'antd';
-import {DollarOutlined, CheckOutlined} from '@ant-design/icons'
-import Laptop from '../../images/aircx7.jpg';
+import { Card } from "antd";
+import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
+import Laptop from "../../images/aircx7.jpg";
+import { createOrder } from "./../../functions/user";
 
 const StripeCheckout = () => {
     const [succeeded, setSucceeded] = useState(false);
@@ -23,6 +24,7 @@ const StripeCheckout = () => {
     // redux
     const { user, userCarts } = useSelector((state) => ({ ...state }));
     const { isCouponed } = userCarts;
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (user && user.token) {
@@ -76,6 +78,31 @@ const StripeCheckout = () => {
             setError(`Payment failed ${payload.error.message}`);
             setProcessing(false);
         } else {
+            // create order
+            createOrder(payload, user.token).then(res => {
+                console.log(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
+
+            // reset carts from window local storage
+            if (typeof window !== "undefined") {
+                if (window.localStorage.getItem("carts")) {
+                    window.localStorage.removeItem("carts");
+                }
+            }
+
+            // reset carts from redux
+            dispatch({
+                type: "ADD_CART",
+                payload: [],
+            });
+
+            // coupon false
+            dispatch({
+                type: "ADD_COUPON",
+                payload: false,
+            });
             setError(null);
             setProcessing(false);
             setSucceeded(true);
