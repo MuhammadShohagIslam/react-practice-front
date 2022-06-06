@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Row, Col } from "antd";
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useSelector } from "react-redux";
 import { getOrdersByUser } from "../../functions/user";
 import UserNavigation from "../../components/navigation/UserNavigation";
@@ -36,18 +36,21 @@ const History = () => {
 
     // show invoce download
     const showDownloadLink = (order) => {
-        return(
-            <PDFDownloadLink
-                document={
-                    <OrderInvoiceDownload order={order} />
-                }
-                fileName="invoice.pdf"
-                className="btn btn-sm btn-block btn-outline-info"
-            >
-                DownLoad PDF
-            </PDFDownloadLink>
-        )
-    }
+        return (
+            <Row className="mt-2">
+                <Col span={12} offset={6}>
+                    <PDFDownloadLink
+                        document={<OrderInvoiceDownload order={order} />}
+                        fileName="invoice.pdf"
+                        className="btn btn-sm btn-block btn-outline-info"
+                        style={{ width: "100%" }}
+                    >
+                        DownLoad PDF
+                    </PDFDownloadLink>
+                </Col>
+            </Row>
+        );
+    };
 
     return (
         <div className="container-fluid">
@@ -75,7 +78,7 @@ const History = () => {
                                     >
                                         <OrderPaymentInfo order={order} />
                                         <OrderCartInTable order={order} />
-                                       {showDownloadLink(order)}
+                                        {showDownloadLink(order)}
                                     </div>
                                 ))}
                         </>

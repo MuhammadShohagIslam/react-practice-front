@@ -18,48 +18,68 @@ const OrderInvoiceDownload = ({ order }) => {
                 <Text style={styles.title}>Order Invoice</Text>
                 <Text style={styles.author}>React Redux Ecommerce</Text>
                 <Text style={styles.subtitle}>Order Summary</Text>
-
                 <Table style={styles.table} data={order.products}>
                     <TableHeader>
-                        <TableCell>Title</TableCell>
-                        <TableCell>Price</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Brand</TableCell>
-                        <TableCell>Color</TableCell>
+                        <TableCell style={styles.tableCell}>Title</TableCell>
+                        <TableCell style={styles.tableCell}>Price</TableCell>
+                        <TableCell style={styles.tableCell}>Quantity</TableCell>
+                        <TableCell style={styles.tableCell}>Brand</TableCell>
+                        <TableCell style={styles.tableCell}>Color</TableCell>
                     </TableHeader>
                     <TableBody>
-                        <DataTableCell getContent={(r) => r.product.title} />
+                        <DataTableCell
+                            style={styles.tableBodyCell}
+                            getContent={(r) => r.product.title}
+                        />
                         <DataTableCell
                             getContent={(r) => `$${r.product.price}`}
+                            style={styles.tableBodyCell}
                         />
-                        <DataTableCell getContent={(r) => r.count} />
-                        <DataTableCell getContent={(r) => r.product.brand} />
-                        <DataTableCell getContent={(r) => r.product.color} />
+                        <DataTableCell
+                            getContent={(r) => r.count}
+                            style={styles.tableBodyCell}
+                        />
+                        <DataTableCell
+                            getContent={(r) => r.product.brand}
+                            style={styles.tableBodyCell}
+                        />
+                        <DataTableCell
+                            getContent={(r) => r.product.color}
+                            style={styles.tableBodyCell}
+                        />
                     </TableBody>
                 </Table>
 
                 <Text style={styles.text}>
                     <Text>
-                        Date:{" "}
+                        Date:{"               "}
                         {new Date(
-                            order.paymentIntents.create * 1000
+                            order.paymentIntents.created * 1000
                         ).toLocaleString()}
                     </Text>
-                    <br />
-                    <Text>Order Id: {order.paymentIntents.id}</Text>
-                    <br />
-                    <Text>Order Status: {order.orderStatus}</Text>
-                    <br />
+                    {"\n"}
                     <Text>
-                        Total Paid:{" "}
-                        {(order.amount / 100).toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                        })}
+                        Order Id: {"        "}{order.paymentIntents.id}
                     </Text>
-                    <Text style={styles.footer}>
-                        ~ Thank you so much for shopping with us ~
+                    {"\n"}
+                    <Text>
+                        Order Status:{"  "}
+                        {order.orderStatus}
                     </Text>
+                    {"\n"}
+                    <Text>
+                        Total Paid:{"       "}
+                        {(order.paymentIntents.amount / 100).toLocaleString(
+                            "en-US",
+                            {
+                                style: "currency",
+                                currency: "USD",
+                            }
+                        )}
+                    </Text>
+                </Text>
+                <Text style={styles.footer}>
+                    ~ Thank you so much for shopping with us ~
                 </Text>
             </Page>
         </Document>
@@ -84,10 +104,17 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 18,
         margin: 12,
+        textAlign:"center"
     },
     table: {
         textAlign: "center",
         verticalAlign: "middle",
+    },
+    tableCell: {
+        textAlign: "center",
+    },
+    tableBodyCell: {
+        textAlign: "center",
     },
     text: {
         margin: 12,
