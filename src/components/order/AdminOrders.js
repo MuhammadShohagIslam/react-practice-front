@@ -8,10 +8,13 @@ const AdminOrders = ({ orders, handleChangeOrderStatus }) => {
         <>
             {orders &&
                 orders.length > 1 &&
-                orders.map((order) => (
+                orders.reverse().map((order) => (
                     <Row key={order._id} className="pb-5">
                         <div className="btn btn-block bg-light">
-                            <OrderPaymentInfo order={order} showStatus={false}/>
+                            <OrderPaymentInfo
+                                order={order}
+                                showStatus={false}
+                            />
 
                             <Row gutter={16} className="mb-3">
                                 <Col span={6}>
@@ -33,6 +36,9 @@ const AdminOrders = ({ orders, handleChangeOrderStatus }) => {
                                     >
                                         <option value="Not Processed">
                                             Not Processed
+                                        </option>
+                                        <option value="Cash On Delivery">
+                                            Cash On Delivery
                                         </option>
                                         <option value="Processing">
                                             Processing

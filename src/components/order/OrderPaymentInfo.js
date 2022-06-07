@@ -4,6 +4,12 @@ const OrderPaymentInfo = ({ order, showStatus = true }) => {
     const { orderStatus } = order;
     const { id, amount, currency, created, payment_method_types, status } =
         order.paymentIntents;
+
+    let formateTime;
+    if (Math.ceil(Math.log(created + 1) / Math.LN10) >= 11) {
+        formateTime = Math.floor(created / 1000);
+    }
+    
     return (
         <div className="px-5">
             <p className="text-center">
@@ -24,7 +30,12 @@ const OrderPaymentInfo = ({ order, showStatus = true }) => {
                 <span>Payment: {status.toUpperCase()}</span>
                 {" / "}
                 <span>
-                    Ordered On: {new Date(created * 1000).toLocaleString()}
+                    Ordered On:{" "}
+                    {formateTime ? (
+                        <>{new Date(formateTime * 1000).toLocaleString()}</>
+                    ) : (
+                        <>{new Date(created * 1000).toLocaleString()}</>
+                    )}
                 </span>
 
                 {showStatus && (

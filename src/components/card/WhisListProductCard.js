@@ -1,10 +1,10 @@
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, HeartFilled } from "@ant-design/icons";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 
-const AdminProductCard = ({ product, handleRemoveProduct }) => {
-    const { slug, title, images, description } = product;
+const WhisListProductCard = ({ product, handleRemovedToWhisList }) => {
+    const { slug, title, images, description, _id } = product;
     return (
         <Card
             cover={
@@ -15,14 +15,13 @@ const AdminProductCard = ({ product, handleRemoveProduct }) => {
                 />
             }
             actions={[
-                <Link to={`/admin/products/${slug}`} className="text-warning">
-                    <EditOutlined />
-                    <br /> Edit Product
+                <Link to={`/products/${slug}`} className="text-warning">
+                    <EyeOutlined /> <br /> View Product
                 </Link>,
-                <span className="text-danger">
-                    <DeleteOutlined onClick={() => handleRemoveProduct(slug)} />
-                    <br /> Delete Product
-                </span>,
+                <button className="addToCart" onClick={() => handleRemovedToWhisList(_id)}>
+                    <HeartFilled className="text-info" /> <br /> Removed To
+                    Wishlist
+                </button>,
             ]}
         >
             <Meta
@@ -33,4 +32,4 @@ const AdminProductCard = ({ product, handleRemoveProduct }) => {
     );
 };
 
-export default AdminProductCard;
+export default WhisListProductCard;

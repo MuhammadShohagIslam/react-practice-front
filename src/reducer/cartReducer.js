@@ -2,6 +2,7 @@ let initialState = {
     carts: [],
     shippingAddress: {},
     isCouponed: false,
+    isCashOnDelivery: false,
 };
 
 //  to add data from window local storage to the inital state
@@ -12,7 +13,9 @@ if (typeof window !== "undefined") {
         initialState.carts = [];
     }
     if (window.localStorage.getItem("shippingAddress")) {
-        initialState.shippingAddress = JSON.parse(window.localStorage.getItem("shippingAddress"));
+        initialState.shippingAddress = JSON.parse(
+            window.localStorage.getItem("shippingAddress")
+        );
     } else {
         initialState.shippingAddress = {};
     }
@@ -34,6 +37,11 @@ export const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isCouponed: action.payload,
+            };
+        case "CASH_ON_DELIVERY":
+            return {
+                ...state,
+                isCashOnDelivery: action.payload,
             };
         default:
             return state;

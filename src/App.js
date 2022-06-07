@@ -35,6 +35,7 @@ import Cart from "./pages/Cart";
 import Checkout from './pages/Checkout';
 import CreateCoupon from './pages/admin/coupon/CreateCoupon';
 import Payment from './pages/Payment';
+import WishList from './pages/user/WishList';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -90,6 +91,7 @@ const App = () => {
 
                 <Route path="/*" element={<UserRoute />}>
                     <Route path="user/history" element={<History />} />
+                    <Route path="user/wishlist" element={<WishList />} />
                     <Route path="user/payment" element={<Payment />} />
                     <Route
                         path="user/update-password"

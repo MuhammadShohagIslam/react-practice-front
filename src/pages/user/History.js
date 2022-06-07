@@ -71,7 +71,7 @@ const History = () => {
                             <hr />
                             {orders &&
                                 orders.length > 0 &&
-                                orders.map((order) => (
+                                orders.reverse().map((order) => (
                                     <div
                                         className="mx-5 my-3 p-3 card"
                                         key={order._id}

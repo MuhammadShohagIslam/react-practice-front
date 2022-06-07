@@ -1,16 +1,20 @@
-import {useState} from 'react';
+import { useState } from "react";
 import { Col, Row } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ProductCardInCheck from "./../components/card/ProductCardInCheck";
 import { saveOrder } from "./../functions/user";
 
 const Cart = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState({
+        onlinePaymentCheckOut: false,
+        cashOnDelivery: false,
+    });
     const { userCarts, user } = useSelector((state) => ({ ...state }));
     const { carts } = userCarts;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const showCartItems = () => (
         <table className="table align-middle">
@@ -47,17 +51,55 @@ const Cart = () => {
         return totalPrice;
     };
 
-    const saveOrderToDb = () => {
-        setLoading(true);
-        saveOrder(carts, user.token).then((res) => {
-            if (res.data.ok) {
-                setLoading(false);
-                navigate("/user/checkout");
-            }
-        }).catch(error => {
-            setLoading(false);
-            console.log(error)
-        })
+    const savePaymentOrderToDb = () => {
+        setLoading({
+            ...loading,
+            onlinePaymentCheckOut: true,
+        });
+        saveOrder(carts, user.token)
+            .then((res) => {
+                if (res.data.ok) {
+                    setLoading({
+                        ...loading,
+                        onlinePaymentCheckOut: false,
+                    });
+                    navigate("/user/checkout");
+                }
+            })
+            .catch((error) => {
+                setLoading({
+                    ...loading,
+                    onlinePaymentCheckOut: false,
+                });
+                console.log(error);
+            });
+    };
+    const saveCashOrderToDb = () => {
+        setLoading({
+            ...loading,
+            cashOnDelivery: true,
+        });
+        saveOrder(carts, user.token)
+            .then((res) => {
+                if (res.data.ok) {
+                    dispatch({
+                        type: "CASH_ON_DELIVERY",
+                        payload: true,
+                    });
+                    setLoading({
+                        ...loading,
+                        cashOnDelivery: false,
+                    });
+                    navigate("/user/checkout");
+                }
+            })
+            .catch((error) => {
+                setLoading({
+                    ...loading,
+                    cashOnDelivery: false,
+                });
+                console.log(error);
+            });
     };
 
     return (
@@ -93,13 +135,25 @@ const Cart = () => {
                     <p>Total Price = {`$${getTotalPrice()}`}</p>
                     <hr />
                     {user ? (
-                        <button
-                            className="btn btn-sm btn-outline-info  mt-2"
-                            disabled={!carts.length}
-                            onClick={saveOrderToDb}
-                        >
-                            {loading ? "Processing" : "Procced To Checkout"}
-                        </button>
+                        <>
+                            <button
+                                className="btn btn-sm btn-outline-info  mt-2"
+                                disabled={!carts.length}
+                                onClick={savePaymentOrderToDb}
+                            >
+                                {loading.onlinePaymentCheckOut ? "Processing" : "Procced To Checkout"}
+                            </button>
+                            <br />
+                            <button
+                                className="btn btn-sm btn-outline-danger  mt-2"
+                                disabled={!carts.length}
+                                onClick={saveCashOrderToDb}
+                            >
+                                {loading.cashOnDelivery
+                                    ? "Processing"
+                                    : "Checkout To Cash On Delivery"}
+                            </button>
+                        </>
                     ) : (
                         <Link
                             to="/login"

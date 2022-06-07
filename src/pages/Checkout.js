@@ -9,6 +9,7 @@ import {
     saveShippingAddress,
     getUserShippingAddress,
     getTotalPriceAfterDiscount,
+    createOrderCashOnDelivery,
 } from "../functions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -40,7 +41,7 @@ const Checkout = () => {
         couponLoading: false,
     });
     const { user, userCarts } = useSelector((state) => ({ ...state }));
-    const { carts } = userCarts;
+    const { carts, isCashOnDelivery, isCouponed } = userCarts;
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -90,17 +91,17 @@ const Checkout = () => {
                 .then((res) => {
                     setProducts([]);
                     setCartTotal(0);
-                    toast.success("Cart Is Empty! Continue Shopping");
-                    setLoading({
-                        ...loading,
-                        emptingCartLoading: false,
-                    });
                     setCouponName("");
                     setTotalPriceAfterDiscount(0);
                     // store redux
                     dispatch({
                         type: "ADD_COUPON",
                         payload: false,
+                    });
+                    toast.success("Cart Is Empty! Continue Shopping");
+                    setLoading({
+                        ...loading,
+                        emptingCartLoading: false,
                     });
                 })
                 .catch((error) => {
@@ -265,6 +266,54 @@ const Checkout = () => {
         });
     };
 
+    const handleCashOrderDelievry = () => {
+        setLoading({
+            ...loading,
+            processingOrderLoading: true,
+        });
+        if (user && user.token) {
+            createOrderCashOnDelivery(isCashOnDelivery, isCouponed, user.token)
+                .then((res) => {
+                    console.log(res.data)
+                    // reset carts from window local storage
+                    if (typeof window !== "undefined") {
+                        if (window.localStorage.getItem("carts")) {
+                            window.localStorage.removeItem("carts");
+                        }
+                    }
+                    // reset carts from redux
+                    dispatch({
+                        type: "ADD_CART",
+                        payload: [],
+                    });
+                    emptyCart(user.token);
+                    // reset coupon from redux
+                    dispatch({
+                        type: "ADD_COUPON",
+                        payload: false,
+                    });
+                    // reset cash on delivery from redux
+                    dispatch({
+                        type: "CASH_ON_DELIVERY",
+                        payload: false,
+                    });
+                    setLoading({
+                        ...loading,
+                        processingOrderLoading: false,
+                    });
+                    setTimeout(() => {
+                        navigate("/user/history");
+                    }, 500);
+                })
+                .catch((error) => {
+                    setLoading({
+                        ...loading,
+                        processingOrderLoading: false,
+                    });
+                });
+        }
+    };
+
     return (
         <div className="container-fluid px-4 pt-3">
             <Row gutter={16}>
@@ -319,15 +368,37 @@ const Checkout = () => {
                     )}
                     <Row>
                         <Col span={12}>
-                            <button
-                                className="btn btn-outline-info"
-                                disabled={!isAddressSave || products.length < 1}
-                                onClick={() => navigate("/user/payment")}
-                            >
-                                {loading.processingOrderLoading
-                                    ? "Processing"
-                                    : "Place Order"}
-                            </button>
+                            {isCashOnDelivery ? (
+                                <button
+                                    className="btn btn-outline-info"
+                                    disabled={
+                                        !isAddressSave || products.length < 1
+                                    }
+                                    onClick={handleCashOrderDelievry}
+                                >
+                                    {loading.processingOrderLoading
+                                        ? "Processing"
+                                        : "Place Order"}
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn btn-outline-info"
+                                    disabled={
+                                        !isAddressSave || products.length < 1
+                                    }
+                                    onClick={() => {
+                                        setLoading({
+                                            ...loading,
+                                            processingOrderLoading: true,
+                                        });
+                                        navigate("/user/payment");
+                                    }}
+                                >
+                                    {loading.processingOrderLoading
+                                        ? "Processing"
+                                        : "Place Order"}
+                                </button>
+                            )}
                         </Col>
                         <Col span={12}>
                             <button

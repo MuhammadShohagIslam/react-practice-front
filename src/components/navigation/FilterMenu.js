@@ -3,7 +3,7 @@ import { Menu, Slider } from "antd";
 import {
     DollarOutlined,
     AppstoreAddOutlined,
-    StarFilled,
+    StarOutlined,
     ShopOutlined,
 } from "@ant-design/icons";
 
@@ -52,7 +52,7 @@ const FilterMenu = ({
         {
             label: "Ratings",
             key: "3",
-            icon: <StarFilled />,
+            icon: <StarOutlined />,
             children: [
                 {
                     key:"ratings",

@@ -1,22 +1,46 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import _ from "lodash";
 import { Row, Col, Card, Tabs, Tooltip } from "antd";
 import StarRatings from "react-star-ratings";
-import { Link } from "react-router-dom";
 import CardCarousel from "../card/CardCarousel";
 import ProductItemList from "../card/ProductItemList";
-import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
+import {
+    ShoppingCartOutlined,
+    HeartOutlined,
+    HeartFilled,
+} from "@ant-design/icons";
 import { avgRating } from "../../functions/avgRating";
 import Laptop from "../../images/aircx7.jpg";
 import RatingModal from "../modal/RatingModal";
 import { useDispatch } from "react-redux";
+import { addToWhisList, removeWhisList, getWhisList } from "../../functions/user";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, handleClickRating, star }) => {
+    const [heartFillIcon, setHeartFillIcon] = useState(false);
     const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
     const { title, images, description, slug, _id, quantity } = product;
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        if(user && user.token){
+            getWhisList(user.token, _id).then(res => {
+                if(res.data.wishList.length > 0){
+                    setHeartFillIcon(true)
+                }
+            })
+        }
+    },[user, _id])
+
+    // const loadWishList = (user) => {
+       
+    // }
 
     const handleAddCart = () => {
         let carts = [];
@@ -44,13 +68,33 @@ const SingleProduct = ({ product, handleClickRating, star }) => {
             type: "ADD_CART",
             payload: uniqueCarts,
         });
-        
+
         // show drawer carts in the side bar
         dispatch({
             type: "VISIBLE_DRAWER",
             payload: true,
         });
     };
+
+    const handleAddToWhisList = () => {
+        if (user && user.token) {
+            if (heartFillIcon) {
+                removeWhisList(user.token, _id).then((res) => {
+                    setHeartFillIcon(false);
+                    toast.error("Product Removed To The WhisList");
+                });
+            } else {
+                addToWhisList(user.token, _id, true).then((res) => {
+                    setHeartFillIcon(true);
+                    toast.success("Product Added To The WhisList");
+                });
+            }
+        } else {
+            navigate("/login", { state: { from: `/products/${slug}` } });
+        }
+    };
+
+
 
     return (
         <Row gutter={24}>
@@ -91,10 +135,21 @@ const SingleProduct = ({ product, handleClickRating, star }) => {
                                 {quantity < 1 ? "Out Of Stock" : "Add To Cart"}
                             </button>{" "}
                         </Tooltip>,
-                        <Link to="/">
-                            <HeartOutlined className="text-info" /> <br /> Add
-                            to Wishlist
-                        </Link>,
+                        <button
+                            className="addToCart"
+                            onClick={handleAddToWhisList}
+                        >
+                            {heartFillIcon ? (
+                                <>
+                                    <HeartFilled className="text-info" /> <br /> Removed To Wishlist
+                                </>
+                            ) : (
+                                <>
+                                <HeartOutlined className="text-info" /> <br /> Add To Wishlist
+                                </>
+                            )}
+                           
+                        </button>,
                         <RatingModal slug={slug}>
                             <StarRatings
                                 rating={star}

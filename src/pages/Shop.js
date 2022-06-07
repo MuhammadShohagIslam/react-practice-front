@@ -1,15 +1,15 @@
-import { Checkbox, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
+import { Checkbox, Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "../components/forms/Star";
 import FilterMenu from "../components/navigation/FilterMenu";
+import ProductCard from "./../components/card/ProductCard";
 import { getListOfCategory } from "../functions/category";
 import {
     getFilterRelatedProducts,
     getProductsByCount,
 } from "../functions/product";
 import { getAllSubCategories } from "../functions/sub-category";
-import ProductCard from "./../components/card/ProductCard";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenvo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -27,6 +27,7 @@ const Shop = () => {
     const [brand, setBrand] = useState("");
     const [color, setColor] = useState("");
     const [shipping, setShipping] = useState("");
+
     const { search } = useSelector((state) => ({ ...state }));
     const { text } = search;
     const dispatch = useDispatch();
@@ -34,10 +35,8 @@ const Shop = () => {
     useEffect(() => {
         // loading products
         loadingProducts();
-
         // loading categories
         loadingCategories();
-
         // loading sub-categories
         loadingSubCategories();
     }, []);
@@ -57,9 +56,11 @@ const Shop = () => {
         getProductsByCount(10)
             .then((res) => {
                 setProducts(res.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
+                setLoading(false);
             });
     };
 
@@ -87,6 +88,12 @@ const Shop = () => {
     // 2. fetching or filtering products based on searching query
     useEffect(() => {
         const delayed = setTimeout(() => {
+            setPrice([0, 0]);
+            setCategoriesId([]);
+            setBrand("");
+            setColor("");
+            setSubCategoryId([]);
+            setShipping("");
             fetchProducts({ searchQuery: text });
             if (!text) {
                 loadingProducts();
@@ -98,7 +105,6 @@ const Shop = () => {
     // 3. fetching or filtering products based on price range
     useEffect(() => {
         fetchProducts({ price });
-        console.log("Pricing");
     }, [ok]);
 
     const onAfterPriceChangeHandler = (value) => {
@@ -107,13 +113,14 @@ const Shop = () => {
             payload: { text: "" },
         });
         setCategoriesId([]);
+        setSubCategoryId([]);
         setBrand("");
         setColor("");
-        setSubCategoryId([]);
+        setShipping("");
         setTimeout(() => {
             setPrice(value);
             setOk(!ok);
-        }, 300);
+        }, 400);
     };
 
     // 4. fetching or filtering products based on categories
@@ -143,6 +150,7 @@ const Shop = () => {
         setPrice([0, 0]);
         setBrand("");
         setColor("");
+        setShipping("");
 
         // console.log(e.target.value);
         let inTheState = [...categoriesId];
@@ -189,6 +197,7 @@ const Shop = () => {
         setSubCategoryId([]);
         setBrand("");
         setColor("");
+        setShipping("");
         fetchProducts({ star: num });
     };
 
@@ -220,6 +229,7 @@ const Shop = () => {
         setPrice([0, 0]);
         setBrand("");
         setColor("");
+        setShipping("");
         let inTheState = [...subCategoryId];
         let justChecked = e.target.value;
 
@@ -269,6 +279,8 @@ const Shop = () => {
         setPrice([0, 0]);
         setCategoriesId([]);
         setSubCategoryId([]);
+        setShipping("");
+        setColor("");
         setBrand(event.target.value);
         setTimeout(() => {
             fetchProducts({ brand: event.target.value });
@@ -304,6 +316,7 @@ const Shop = () => {
         setCategoriesId([]);
         setSubCategoryId([]);
         setBrand("");
+        setShipping("");
         setColor(event.target.value);
         setTimeout(() => {
             fetchProducts({ color: event.target.value });

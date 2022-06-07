@@ -84,6 +84,15 @@ span.avatar-item {
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: white !important;
 }
+.ant-menu-item:active, .ant-menu-submenu-title:active {
+    background: white !important;
+}
+.ant-menu-sub.ant-menu-inline {
+    background: white !important;
+}
+.ant-menu-inline .ant-menu-item:after, .ant-menu-vertical-left .ant-menu-item:after, .ant-menu-vertical-right .ant-menu-item:after, .ant-menu-vertical .ant-menu-item:after {
+    border-right: 3px solid white !important;
+}
 .ant-menu-inline .ant-menu-item,
 .ant-menu-inline .ant-menu-submenu-title,
 .ant-menu-vertical-left .ant-menu-item,

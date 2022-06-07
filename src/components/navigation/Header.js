@@ -10,6 +10,7 @@ import {
     LogoutOutlined,
     ShoppingOutlined,
     ShoppingCartOutlined,
+    HeartOutlined
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
@@ -64,6 +65,7 @@ const Header = () => {
             key: "cart",
             icon: <ShoppingCartOutlined />,
         },
+
         !user && {
             label: <Link to="/register">Register</Link>,
             key: "register",
@@ -109,6 +111,12 @@ const Header = () => {
             label: <SearchFilter />,
             key: "search",
             className: `float-end`,
+        },
+        user && user.role === "subscriber" &&{
+            label: <Link to="/user/wishlist">Wishlist</Link>,
+            key: "wishlist",
+            icon: <HeartOutlined />,
+            
         },
     ];
 
