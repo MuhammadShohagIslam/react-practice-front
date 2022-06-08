@@ -147,3 +147,10 @@ span.avatar-item {
 .addToCart:focus {
     outline: none !important;
 }
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    pointer-events: auto !important;
+    cursor: no-drop !important;
+}
+.loader{
+    opacity: 200 !important;
+}

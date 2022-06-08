@@ -52,8 +52,8 @@ const ForgotPassword = () => {
                 autoFocus
             />
             <br />
-            <button type="submit" className="btn btn-outline-primary">
-                {loading ? "Loading" : "Submit"}
+            <button type="submit" className="btn btn-outline-primary" disabled={loading}>
+                {loading ? "Loading..." : "Submit"}
             </button>
         </form>
     );

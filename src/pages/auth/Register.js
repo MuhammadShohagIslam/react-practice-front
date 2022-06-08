@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -11,15 +12,23 @@ const Register = () => {
     const { user } = useSelector((state) => ({ ...state }));
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (user && user.token) {
-            navigate("/");
-        }
-    }, [navigate, user]);
+    const location = useLocation();
 
-    if (user && user.token) {
-        return <p className="text-center">Loading...</p>;
-    }
+    useEffect(() => {
+        let intended = location.state;
+        if (intended) {
+            return;
+        } else {
+            if (user && user.token && user.role === "admin") {
+                navigate("/admin/dashboard");
+            } else if (user && user.token && user.role === "subscriber") {
+                navigate("/user/history");
+            } else {
+                navigate("/register");
+            }
+        }
+    }, [user, navigate]);
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         const actionCodeSettings = {
@@ -68,8 +77,8 @@ const Register = () => {
                 autoFocus
             />
             <br />
-            <button type="submit" className="btn btn-outline-info">
-                {loading ? "Loading" : "Register"}
+            <button type="submit" className="btn btn-outline-info" disabled={loading}>
+                {loading ? "Loading..." : "Register"}
             </button>
         </form>
     );

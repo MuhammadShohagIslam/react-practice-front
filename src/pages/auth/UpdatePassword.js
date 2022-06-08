@@ -51,7 +51,7 @@ const UpdatePassword = () => {
             />
             <br />
             <button type="submit" className="btn btn-outline-primary"  disabled={loading || newPassword.length < 6}>
-                {loading ? "Loading" : "Submit"}
+                {loading ? "Loading..." : "Submit"}
             </button>
         </form>
     );

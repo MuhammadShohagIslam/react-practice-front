@@ -11,6 +11,7 @@ import { getAllSubCategories } from "../functions/sub-category";
 import Star from "../components/forms/Star";
 import FilterMenu from "../components/navigation/FilterMenu";
 import ProductCard from "./../components/card/ProductCard";
+import LoadingCards from "../components/card/LoadingCards";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenvo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -54,6 +55,7 @@ const Shop = () => {
 
     // 1. loading products
     const loadingProducts = () => {
+        setLoading(true);
         getProductsByCount(10)
             .then((res) => {
                 setProducts(res.data);
@@ -358,6 +360,7 @@ const Shop = () => {
             fetchProducts({ shipping: e.target.value });
         }, 300);
     };
+
     return (
         <div className="container-fluid">
             <Row>
@@ -375,13 +378,13 @@ const Shop = () => {
                     />
                 </Col>
                 <Col span={17} offset={1}>
-                    {loading ? (
-                        <h4 className="text-danger">Loading...</h4>
-                    ) : (
-                        <h4>Products</h4>
-                    )}
+                    <h4>Products</h4>
 
-                    {products && products.length < 1 ? (
+                    {loading ? (
+                        <div className="pt-5">
+                            <LoadingCards count={3} />
+                        </div>
+                    ) : products && products.length < 1 ? (
                         <p>No Product Found</p>
                     ) : (
                         <Row gutter={16} className="mt-5">

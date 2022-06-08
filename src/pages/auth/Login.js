@@ -14,7 +14,10 @@ const Login = () => {
         "muhammadshohagislam.software.e@gmail.com"
     );
     const [password, setPassword] = useState("123456");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState({
+        userLoading: false,
+        googleUserLoading: false
+    });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -71,7 +74,10 @@ const Login = () => {
             toast.error("Invalid Input!");
             return;
         }
-        setLoading(true);
+        setLoading({
+            ...loading,
+            userLoading: true
+        });
         try {
             const result = await signInWithEmailAndPassword(
                 auth,
@@ -94,14 +100,21 @@ const Login = () => {
                     });
                     navigateAdminOrUser(res.data);
                     toast.success("Login Successfully!");
-                    setLoading(false);
+                    setLoading({
+                        ...loading,
+                        userLoading: false
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
+
                 });
         } catch (error) {
             toast.error(`Wrong Email Or Password!`);
-            setLoading(false);
+            setLoading({
+                ...loading,
+                userLoading: true
+            });
         }
     };
     const handleGoogleLogin = async () => {
@@ -109,6 +122,10 @@ const Login = () => {
             const result = await signInWithPopup(auth, googleAuthProvider);
             const { user } = result;
             const idTokenResult = await user.getIdTokenResult();
+            setLoading({
+                ...loading,
+                googleUserLoading: true
+            });
             createOrUpdateUser(idTokenResult.token)
                 .then((res) => {
                     dispatch({
@@ -121,15 +138,26 @@ const Login = () => {
                             _id: res.data._id,
                         },
                     });
-                    setLoading(false);
+                    setLoading({
+                        ...loading,
+                        googleUserLoading: false
+                    });
                     navigateAdminOrUser(res.data);
                     toast.success("Login Successfully With Google!");
                 })
                 .catch((error) => {
                     console.log(error);
+                    setLoading({
+                        ...loading,
+                        googleUserLoading: false
+                    });
                 });
         } catch (error) {
             toast.error(`Unauthenticated User!`);
+            setLoading({
+                ...loading,
+                googleUserLoading: false
+            });
         }
     };
     const loginForm = () => (
@@ -160,11 +188,11 @@ const Login = () => {
                 onClick={handleSubmit}
                 className="mb-3 btn btn-outline-info"
                 style={{ width: "100%" }}
-                disabled={!email || password.length < 6}
+                disabled={!email || password.length < 6 || loading.userLoading}
             >
                 {" "}
-                {loading ? (
-                    "Loading"
+                {loading.userLoading ? (
+                    "Loading..."
                 ) : (
                     <span>
                         <MailOutlined /> Login with Email/Password
@@ -183,6 +211,7 @@ const Login = () => {
                         onClick={handleGoogleLogin}
                         className={`mb-3 btn btn-outline-danger`}
                         style={{ width: "100%" }}
+                        disabled={loading.googleUserLoading}
                     >
                         <span>
                             <MailOutlined /> Login with Google

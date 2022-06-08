@@ -136,8 +136,8 @@ const ShippingAddressForm = ({
                     <div className="valid-feedback">Look Good!</div>
                 )}
             </div>
-            <button type="submit" className="btn btn-outline-info mt-1">
-                {loading ? "Saving" : "Save"}
+            <button type="submit" className="btn btn-outline-info mt-1" disabled={loading}>
+                {loading ? "Saving..." : "Save"}
             </button>
         </form>
     );

@@ -108,9 +108,9 @@ const CompleteRegistration = () => {
             <button
                 type="submit"
                 className="btn btn-outline-primary"
-                disabled={password < 6}
+                disabled={password < 6 || loading}
             >
-                {loading ? "Loading" : "Complete Registration"}
+                {loading ? "Loading..." : "Complete Registration"}
             </button>
         </form>
     );

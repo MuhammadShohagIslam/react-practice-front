@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 import { Row, Col } from "antd";
 import AdminOrders from "../../components/order/AdminOrders";
 import { toast } from "react-toastify";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const AdminDashboard = () => {
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
@@ -17,9 +19,15 @@ const AdminDashboard = () => {
     // loading all orders
     const loadingAllOrders = (user) => {
         if (user && user.token) {
-            getOrders(user.token).then((res) => {
-                setOrders(res.data);
-            });
+            setLoading(true);
+            getOrders(user.token)
+                .then((res) => {
+                    setOrders(res.data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setLoading(false);
+                });
         }
     };
 
@@ -37,10 +45,16 @@ const AdminDashboard = () => {
                     <AdminNavigation />
                 </Col>
                 <Col span={19} className="mt-3">
-                    <AdminOrders
-                        orders={orders}
-                        handleChangeOrderStatus={handleChangeOrderStatus}
-                    />
+                    {loading ? (
+                        <div className="col-12 text-center p-5 loader">
+                            __ React Redux EC <LoadingOutlined /> MMERCE __
+                        </div>
+                    ) : (
+                        <AdminOrders
+                            orders={orders}
+                            handleChangeOrderStatus={handleChangeOrderStatus}
+                        />
+                    )}
                 </Col>
             </Row>
         </div>

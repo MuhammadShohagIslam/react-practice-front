@@ -1,39 +1,79 @@
-import { Fragment } from "react";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { currentUser } from "./functions/auth";
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Header from "./components/navigation/Header";
-import CartDrawer from "./components/drawer/CartDrawer";
-import CompleteRegistration from "./pages/auth/CompleteRegistration";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import UserRoute from "./components/routes/UserRoute";
-import History from "./pages/user/History";
-import UpdatePassword from "./pages/auth/UpdatePassword";
-import AdminRoute from "./components/routes/AdminRoute";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import CreateCategory from "./pages/admin/category/CreateCategory";
-import UpdateCategory from "./pages/admin/category/UpdateCategory";
-import CreateSubCategory from "./pages/admin/sub-catetegory/CreateSubCategory";
-import UpdateSubCategory from "./pages/admin/sub-catetegory/UpdateSubCategory";
-import CreateProduct from "./pages/admin/product/CreateProduct";
-import AllProducts from "./pages/admin/product/AllProducts";
-import UpdateProduct from "./pages/admin/product/UpdateProduct";
-import CategoryProduct from "./pages/category/CategoryProduct";
-import Products from "./pages/Products";
-import SubCategoryProducts from "./pages/sub-category/SubCategoryProducts";
-import Shop from "./pages/Shop";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import CreateCoupon from "./pages/admin/coupon/CreateCoupon";
-import Payment from "./pages/Payment";
-import WishList from "./pages/user/WishList";
+const Home = lazy(() => import("./pages/Home"));
+const Header = lazy(() => import("./components/navigation/Header"));
+const Login = lazy(() => import("./pages/auth/Login"));
+const Register = lazy(() => import("./pages/auth/Register"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Payment = lazy(() => import("./pages/Payment"));
+const CategoryProduct = lazy(() => import("./pages/category/CategoryProduct"));
+const Products = lazy(() => import("./pages/Products"));
+const SubCategoryProducts = lazy(() =>
+    import("./pages/sub-category/SubCategoryProducts")
+);
+const CartDrawer = lazy(() => import("./components/drawer/CartDrawer"));
+const CompleteRegistration = lazy(() =>
+    import("./pages/auth/CompleteRegistration")
+);
+const ForgotPassword = lazy(() => import("./pages/auth/ForgotPassword"));
+const UpdatePassword = lazy(() => import("./pages/auth/UpdatePassword"));
+const UserRoute = lazy(() => import("./components/routes/UserRoute"));
+const History = lazy(() => import("./pages/user/History"));
+const WishList = lazy(() => import("./pages/user/WishList"));
+const AdminRoute = lazy(() => import("./components/routes/AdminRoute"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const CreateCategory = lazy(() =>
+    import("./pages/admin/category/CreateCategory")
+);
+const UpdateCategory = lazy(() =>
+    import("./pages/admin/category/UpdateCategory")
+);
+const CreateSubCategory = lazy(() =>
+    import("./pages/admin/sub-catetegory/CreateSubCategory")
+);
+const UpdateSubCategory = lazy(() =>
+    import("./pages/admin/sub-catetegory/UpdateSubCategory")
+);
+const CreateProduct = lazy(() => import("./pages/admin/product/CreateProduct"));
+const AllProducts = lazy(() => import("./pages/admin/product/AllProducts"));
+const UpdateProduct = lazy(() => import("./pages/admin/product/UpdateProduct"));
+const CreateCoupon = lazy(() => import("./pages/admin/coupon/CreateCoupon"));
+// import Home from "./pages/Home";
+// import Login from "./pages/auth/Login";
+// import Register from "./pages/auth/Register";
+// import Header from "./components/navigation/Header";
+// import CartDrawer from "./components/drawer/CartDrawer";
+// import CompleteRegistration from "./pages/auth/CompleteRegistration";
+// import ForgotPassword from "./pages/auth/ForgotPassword";
+// import UserRoute from "./components/routes/UserRoute";
+// import History from "./pages/user/History";
+// import UpdatePassword from "./pages/auth/UpdatePassword";
+// import AdminRoute from "./components/routes/AdminRoute";
+// import AdminDashboard from "./pages/admin/AdminDashboard";
+// import CreateCategory from "./pages/admin/category/CreateCategory";
+// import UpdateCategory from "./pages/admin/category/UpdateCategory";
+// import CreateSubCategory from "./pages/admin/sub-catetegory/CreateSubCategory";
+// import UpdateSubCategory from "./pages/admin/sub-catetegory/UpdateSubCategory";
+// import CreateProduct from "./pages/admin/product/CreateProduct";
+// import AllProducts from "./pages/admin/product/AllProducts";
+// import UpdateProduct from "./pages/admin/product/UpdateProduct";
+// import CategoryProduct from "./pages/category/CategoryProduct";
+// import Products from "./pages/Products";
+// import SubCategoryProducts from "./pages/sub-category/SubCategoryProducts";
+// import Shop from "./pages/Shop";
+// import Cart from "./pages/Cart";
+// import Checkout from "./pages/Checkout";
+// import CreateCoupon from "./pages/admin/coupon/CreateCoupon";
+// import Payment from "./pages/Payment";
+// import WishList from "./pages/user/WishList";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -66,7 +106,13 @@ const App = () => {
     }, [dispatch]);
 
     return (
-        <Fragment>
+        <Suspense
+            fallback={
+                <div className="col-12 text-center p-5 mt-5 loader">
+                    __ React Redux EC <LoadingOutlined /> MMERCE __
+                </div>
+            }
+        >
             <ToastContainer />
             <Header />
             <CartDrawer />
@@ -208,7 +254,7 @@ const App = () => {
                         </AdminRoute>
                     }
                 />
-                 <Route
+                <Route
                     path="/admin/wishlist"
                     element={
                         <AdminRoute>
@@ -253,7 +299,7 @@ const App = () => {
                     <Route path="admin/coupon" element={<CreateCoupon />} />
                 </Route> */}
             </Routes>
-        </Fragment>
+        </Suspense>
     );
 };
 

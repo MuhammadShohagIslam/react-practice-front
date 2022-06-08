@@ -113,8 +113,8 @@ const Checkout = () => {
                         emptingCartLoading: false,
                     });
                     setTimeout(() => {
-                        navigate("/cart")
-                    },5000)
+                        navigate("/cart");
+                    }, 5000);
                 })
                 .catch((error) => {
                     setLoading({
@@ -232,9 +232,9 @@ const Checkout = () => {
             </div>
             <button
                 className="btn btn-outline-info mt-1"
-                disabled={carts.length === 0}
+                disabled={carts.length === 0 || loading.couponLoading}
             >
-                {loading.couponLoading ? "Saving" : "Save"}
+                {loading.couponLoading ? "Saving..." : "Save"}
             </button>
         </form>
     );
@@ -376,19 +376,23 @@ const Checkout = () => {
                                 <button
                                     className="btn btn-outline-info"
                                     disabled={
-                                        !isAddressSave || products.length < 1
+                                        !isAddressSave ||
+                                        products.length < 1 ||
+                                        loading.processingOrderLoading
                                     }
                                     onClick={handleCashOrderDelievry}
                                 >
                                     {loading.processingOrderLoading
-                                        ? "Processing"
+                                        ? "Processing..."
                                         : "Place Order"}
                                 </button>
                             ) : (
                                 <button
                                     className="btn btn-outline-info"
                                     disabled={
-                                        !isAddressSave || products.length < 1
+                                        !isAddressSave ||
+                                        products.length < 1 ||
+                                        loading.processingOrderLoading
                                     }
                                     onClick={() => {
                                         setLoading({
@@ -399,7 +403,7 @@ const Checkout = () => {
                                     }}
                                 >
                                     {loading.processingOrderLoading
-                                        ? "Processing"
+                                        ? "Processing..."
                                         : "Place Order"}
                                 </button>
                             )}
@@ -407,11 +411,14 @@ const Checkout = () => {
                         <Col span={12}>
                             <button
                                 className="btn btn-outline-info"
-                                disabled={products.length < 1}
+                                disabled={
+                                    products.length < 1 ||
+                                    loading.emptingCartLoading
+                                }
                                 onClick={handleEmptyCart}
                             >
                                 {loading && loading.emptingCartLoading
-                                    ? "Removing"
+                                    ? "Removing..."
                                     : "Empty Cart"}
                             </button>
                         </Col>

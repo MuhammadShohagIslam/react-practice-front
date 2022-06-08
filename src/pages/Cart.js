@@ -137,21 +137,21 @@ const Cart = () => {
                         <>
                             <button
                                 className="btn btn-sm btn-outline-info  mt-2"
-                                disabled={!carts.length}
+                                disabled={!carts.length || loading.onlinePaymentCheckOut}
                                 onClick={savePaymentOrderToDb}
                             >
                                 {loading.onlinePaymentCheckOut
-                                    ? "Processing"
+                                    ? "Processing..."
                                     : "Procced To Checkout"}
                             </button>
                             <br />
                             <button
                                 className="btn btn-sm btn-outline-danger  mt-2"
-                                disabled={!carts.length}
+                                disabled={!carts.length || loading.cashOnDelivery}
                                 onClick={saveCashOrderToDb}
                             >
                                 {loading.cashOnDelivery
-                                    ? "Processing"
+                                    ? "Processing..."
                                     : "Checkout To Cash On Delivery"}
                             </button>
                         </>
