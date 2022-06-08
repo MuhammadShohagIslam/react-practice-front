@@ -11,7 +11,6 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
     const navigate = useNavigate();
-
     const location = useLocation();
 
     useEffect(() => {
@@ -19,16 +18,18 @@ const Register = () => {
         if (intended) {
             return;
         } else {
-            if (user && user.token && user.role === "admin") {
-                navigate("/admin/dashboard");
-            } else if (user && user.token && user.role === "subscriber") {
-                navigate("/user/history");
+            if (
+                user &&
+                user.token &&
+                (user.role === "admin" || user.role === "subscriber")
+            ) {
+                navigate("/");
             } else {
                 navigate("/register");
             }
         }
     }, [user, navigate]);
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const actionCodeSettings = {
@@ -77,7 +78,11 @@ const Register = () => {
                 autoFocus
             />
             <br />
-            <button type="submit" className="btn btn-outline-info" disabled={loading}>
+            <button
+                type="submit"
+                className="btn btn-outline-info"
+                disabled={loading}
+            >
                 {loading ? "Loading..." : "Register"}
             </button>
         </form>

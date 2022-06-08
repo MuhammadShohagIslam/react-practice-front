@@ -120,7 +120,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="login" element={<Login />} />
+                <Route path="/login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
                 <Route
@@ -129,7 +129,7 @@ const App = () => {
                 />
                 <Route path="/forgot/password" element={<ForgotPassword />} />
                 <Route path="/user/checkout" element={<Checkout />} />
-                <Route path="products/:slug" element={<Products />} />
+                <Route path="/products/:slug" element={<Products />} />
                 <Route
                     path="/products/categories/:slug"
                     element={<CategoryProduct />}

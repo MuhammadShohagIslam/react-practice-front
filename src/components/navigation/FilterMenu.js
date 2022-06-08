@@ -111,16 +111,6 @@ const FilterMenu = ({
         },
     ];
 
-    // const rootSubmenuKeys = ["1", "2", "3", "4", "5"];
-    // const onOpenChange = (keys) => {
-    //     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-
-    //     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //         setOpenKeys(keys);
-    //     } else {
-    //         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    //     }
-    // };
     return (
         <Menu
             mode="inline"

@@ -11,7 +11,6 @@ import OrderCartInTable from "./../../components/order/OrderCartInTable";
 const History = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
-
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {

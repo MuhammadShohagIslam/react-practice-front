@@ -61,9 +61,6 @@ span.avatar-item {
     height: 34px;
     border: none;
     border-radius: 0px !important;
-    border-bottom: 1px solid transparent;
-}
-.searchInput:hover {
     border-bottom: 1px solid #1890ff;
     transition: ease-in-out, border-bottom 0.35s ease-in-out;
 }
@@ -78,7 +75,7 @@ span.avatar-item {
     left: -25px;
     top: 11px;
 }
-.searchInputIcon:hover {
+.searchInputIcon:hover{
     color: #1890ff;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {

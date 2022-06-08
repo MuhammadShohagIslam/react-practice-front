@@ -8,7 +8,6 @@ const UserRoute = ({ children }) => {
 
     useEffect(() => {
         if (user && user.token && user.role === "subscriber") {
-            console.log("Subscriber")
             setOk(true);
         }
     }, [user]);
@@ -17,19 +16,3 @@ const UserRoute = ({ children }) => {
 };
 
 export default UserRoute;
-
-// import { Outlet } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import LoadingToRedirect from "./LoadingToRedirect";
-
-// const UserRoute = () => {
-//     const { user } = useSelector((state) => ({ ...state }));
-
-//     return user && user.token && user.role === "subscriber" ? (
-//         <Outlet />
-//     ) : (
-//         <LoadingToRedirect path="/" />
-//     );
-// };
-
-// export default UserRoute;

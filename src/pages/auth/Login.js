@@ -16,7 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState({
         userLoading: false,
-        googleUserLoading: false
+        googleUserLoading: false,
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -29,10 +29,12 @@ const Login = () => {
         if (intended) {
             return;
         } else {
-            if (user && user.token && user.role === "admin") {
-                navigate("/admin/dashboard");
-            } else if (user && user.token && user.role === "subscriber") {
-                navigate("/user/history");
+            if (
+                user &&
+                user.token &&
+                (user.role === "admin" || user.role === "subscriber")
+            ) {
+                navigate("/");
             } else {
                 navigate("/login");
             }
@@ -76,7 +78,7 @@ const Login = () => {
         }
         setLoading({
             ...loading,
-            userLoading: true
+            userLoading: true,
         });
         try {
             const result = await signInWithEmailAndPassword(
@@ -102,18 +104,17 @@ const Login = () => {
                     toast.success("Login Successfully!");
                     setLoading({
                         ...loading,
-                        userLoading: false
+                        userLoading: false,
                     });
                 })
                 .catch((error) => {
                     console.log(error);
-
                 });
         } catch (error) {
             toast.error(`Wrong Email Or Password!`);
             setLoading({
                 ...loading,
-                userLoading: true
+                userLoading: true,
             });
         }
     };
@@ -124,7 +125,7 @@ const Login = () => {
             const idTokenResult = await user.getIdTokenResult();
             setLoading({
                 ...loading,
-                googleUserLoading: true
+                googleUserLoading: true,
             });
             createOrUpdateUser(idTokenResult.token)
                 .then((res) => {
@@ -140,7 +141,7 @@ const Login = () => {
                     });
                     setLoading({
                         ...loading,
-                        googleUserLoading: false
+                        googleUserLoading: false,
                     });
                     navigateAdminOrUser(res.data);
                     toast.success("Login Successfully With Google!");
@@ -149,14 +150,14 @@ const Login = () => {
                     console.log(error);
                     setLoading({
                         ...loading,
-                        googleUserLoading: false
+                        googleUserLoading: false,
                     });
                 });
         } catch (error) {
             toast.error(`Unauthenticated User!`);
             setLoading({
                 ...loading,
-                googleUserLoading: false
+                googleUserLoading: false,
             });
         }
     };

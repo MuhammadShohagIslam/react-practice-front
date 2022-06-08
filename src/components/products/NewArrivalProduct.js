@@ -18,7 +18,6 @@ const NewArrivalProduct = () => {
 
     useEffect(() => {
         setLoading(true);
-        console.log("b", page);
         getProductsBySort("createdAt", "desc", page)
             .then((res) => {
                 setProducts(res.data);
@@ -27,7 +26,6 @@ const NewArrivalProduct = () => {
             .catch((error) => {
                 console.log(error);
             });
-        console.log("a", page);
     }, [page]);
     
     const floorTotalProductLength = Math.floor((totalProduct / 3) * 10)

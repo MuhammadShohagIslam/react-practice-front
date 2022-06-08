@@ -363,9 +363,9 @@ const Shop = () => {
 
     return (
         <div className="container-fluid">
-            <Row>
+            <Row className="mt-2">
                 <Col span={6}>
-                    <span>Search / Filter</span>
+                    <h5 className="text-center">Search/Filter</h5>
                     <FilterMenu
                         price={price}
                         onAfterPriceChangeHandler={onAfterPriceChangeHandler}
@@ -381,13 +381,13 @@ const Shop = () => {
                     <h4>Products</h4>
 
                     {loading ? (
-                        <div className="pt-5">
+                        <div className="pt-3">
                             <LoadingCards count={3} />
                         </div>
                     ) : products && products.length < 1 ? (
                         <p>No Product Found</p>
                     ) : (
-                        <Row gutter={16} className="mt-5">
+                        <Row gutter={16} className="mt-3">
                             {products &&
                                 products.length &&
                                 products.map((product) => (

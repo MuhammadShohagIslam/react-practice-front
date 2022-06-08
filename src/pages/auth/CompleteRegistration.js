@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
-import { signInWithEmailLink, updatePassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { signInWithEmailLink, updatePassword } from "firebase/auth";
 import { createOrUpdateUser } from "./../../functions/auth";
 
 const CompleteRegistration = () => {
@@ -14,32 +15,35 @@ const CompleteRegistration = () => {
     const dispatch = useDispatch();
     // for redirect another page
     const navigate = useNavigate();
+    const location = useLocation();
     const { user } = useSelector((state) => ({ ...state }));
     useEffect(() => {
+        let intended = location.state;
+        if (intended) {
+            return;
+        } else {
+            if (
+                user &&
+                user.token &&
+                (user.role === "admin" || user.role === "subscriber")
+            ) {
+                navigate("/");
+            } else {
+                navigate("/register/complete");
+            }
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         const email = window.localStorage.getItem("emailForSignIn");
+        console.log("e");
         if (email) {
             setEmail(email);
         }
     }, []);
 
-    useEffect(() => {
-        if (user && user?.token && user.role === "subscriber") {
-            navigate("/user/history");
-            return;
-        }
-        if (user && user?.token && user.role === "admin") {
-            navigate("/admin/dashbaord");
-            return;
-        }
-    }, [user, navigate]);
 
-    if (user && user?.token && user.role === "subscriber") {
-        return <p className="text-center">Loading...</p>;
-    }
-    if (user && user?.token && user.role === "admin") {
-        return <p className="text-center">Loading...</p>;
-    }
-
+   console.log("a")
     const handleSubmit = async (event) => {
         event.preventDefault();
         // validation

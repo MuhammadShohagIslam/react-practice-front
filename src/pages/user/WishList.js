@@ -23,7 +23,6 @@ const WishList = () => {
             setLoading(true);
             getWhisLists(user.token)
                 .then((res) => {
-                    console.log(res.data);
                     setWhisList(res.data.wishList);
                     setLoading(false);
                 })
@@ -34,7 +33,6 @@ const WishList = () => {
     };
 
     const handleRemovedToWhisList = (_id) => {
-        console.log(_id);
         if (user && user.token) {
             removeWhisList(user.token, _id).then((res) => {
                 toast.error("Wish-List is Removed!");
