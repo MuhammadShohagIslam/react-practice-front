@@ -1,13 +1,13 @@
-import { Row, Col } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import SingleProduct from "../components/products/SingleProduct";
+import { Row, Col } from "antd";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
     getProduct,
     productRating,
     relatedProducts,
 } from "../functions/product";
-import { useSelector } from "react-redux";
+import SingleProduct from "../components/products/SingleProduct";
 import ProductCard from "./../components/card/ProductCard";
 
 const Products = () => {

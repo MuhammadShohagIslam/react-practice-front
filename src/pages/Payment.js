@@ -1,7 +1,7 @@
 import React from 'react'
+import { Row, Col } from 'antd';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { Row, Col } from 'antd';
 import StripeCheckout from './../components/stripe-checkout/StripeCheckout';
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLICABLE_KEY);
 

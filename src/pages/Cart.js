@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Col, Row } from "antd";
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import ProductCardInCheck from "./../components/card/ProductCardInCheck";
 import { saveOrder } from "./../functions/user";
+import ProductCardInCheck from "./../components/card/ProductCardInCheck";
 
 const Cart = () => {
     const [loading, setLoading] = useState({
@@ -141,7 +140,9 @@ const Cart = () => {
                                 disabled={!carts.length}
                                 onClick={savePaymentOrderToDb}
                             >
-                                {loading.onlinePaymentCheckOut ? "Processing" : "Procced To Checkout"}
+                                {loading.onlinePaymentCheckOut
+                                    ? "Processing"
+                                    : "Procced To Checkout"}
                             </button>
                             <br />
                             <button

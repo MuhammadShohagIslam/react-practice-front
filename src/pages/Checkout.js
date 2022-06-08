@@ -81,6 +81,15 @@ const Checkout = () => {
     }, [user]);
 
     const handleEmptyCart = () => {
+        // remove cart window local storage
+        if (typeof window !== "undefined") {
+            window.localStorage.removeItem("carts");
+        }
+        // remove cart from redux store
+        dispatch({
+            type: "ADD_CART",
+            payload: [],
+        });
         // remove cart from database
         if (user && user.token) {
             setLoading({
@@ -103,6 +112,9 @@ const Checkout = () => {
                         ...loading,
                         emptingCartLoading: false,
                     });
+                    setTimeout(() => {
+                        navigate("/cart")
+                    },5000)
                 })
                 .catch((error) => {
                     setLoading({
@@ -112,15 +124,6 @@ const Checkout = () => {
                     console.log(error);
                 });
         }
-        // remove cart window local storage
-        if (typeof window !== "undefined") {
-            window.localStorage.removeItem("carts");
-        }
-        // remove cart from redux store
-        dispatch({
-            type: "ADD_CART",
-            payload: [],
-        });
     };
     const handleAddressValueChange = (e) => {
         setAddressValues({
@@ -255,6 +258,7 @@ const Checkout = () => {
                     type: "ADD_COUPON",
                     payload: true,
                 });
+                setInValidCouponName("");
             }
             if (res.data.error) {
                 setInValidCouponName(res.data.error);
@@ -274,7 +278,7 @@ const Checkout = () => {
         if (user && user.token) {
             createOrderCashOnDelivery(isCashOnDelivery, isCouponed, user.token)
                 .then((res) => {
-                    console.log(res.data)
+                    console.log(res.data);
                     // reset carts from window local storage
                     if (typeof window !== "undefined") {
                         if (window.localStorage.getItem("carts")) {
@@ -303,7 +307,7 @@ const Checkout = () => {
                     });
                     setTimeout(() => {
                         navigate("/user/history");
-                    }, 500);
+                    }, 300);
                 })
                 .catch((error) => {
                     setLoading({
@@ -403,7 +407,7 @@ const Checkout = () => {
                         <Col span={12}>
                             <button
                                 className="btn btn-outline-info"
-                                disabled={!isAddressSave || products.length < 1}
+                                disabled={products.length < 1}
                                 onClick={handleEmptyCart}
                             >
                                 {loading && loading.emptingCartLoading

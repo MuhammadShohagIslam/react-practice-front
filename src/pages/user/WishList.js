@@ -5,7 +5,8 @@ import WhisListProductCard from "./../../components/card/WhisListProductCard";
 import { getWhisLists, removeWhisList } from "../../functions/user";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import LoadingCards from './../../components/card/LoadingCards';
+import LoadingCards from "./../../components/card/LoadingCards";
+import AdminNavigation from "../../components/navigation/AdminNavigation";
 
 const WishList = () => {
     const [whisLists, setWhisList] = useState([]);
@@ -46,37 +47,41 @@ const WishList = () => {
         <div className="container-fluid">
             <Row gutter={16}>
                 <Col span={4}>
-                    <UserNavigation />
+                    {user && user.token && user.role === "subscriber" ? (
+                        <UserNavigation />
+                    ) : (
+                        <AdminNavigation />
+                    )}
                 </Col>
                 <Col span={20} className="pt-3">
-                        {loading ? (
-                            <LoadingCards count={2} />
-                        ) : (
-                            <Row gutter={12}>
-                                {whisLists && whisLists.length ? (
-                                    whisLists.map((item) => (
-                                        <Col
-                                            span={8}
-                                            key={item._id}
-                                            className="mb-3"
-                                        >
-                                            <WhisListProductCard
-                                                product={item.product}
-                                                handleRemovedToWhisList={
-                                                    handleRemovedToWhisList
-                                                }
-                                            />
-                                        </Col>
-                                    ))
-                                ) : (
-                                    <>
-                                        <h4 className="text-center">
-                                            No Wish-List
-                                        </h4>
-                                    </>
-                                )}
-                            </Row>
-                        )}
+                    {loading ? (
+                        <LoadingCards count={2} />
+                    ) : (
+                        <Row gutter={12}>
+                            {whisLists && whisLists.length ? (
+                                whisLists.map((item) => (
+                                    <Col
+                                        span={8}
+                                        key={item._id}
+                                        className="mb-3"
+                                    >
+                                        <WhisListProductCard
+                                            product={item.product}
+                                            handleRemovedToWhisList={
+                                                handleRemovedToWhisList
+                                            }
+                                        />
+                                    </Col>
+                                ))
+                            ) : (
+                                <>
+                                    <h4 className="text-center">
+                                        No Wish-List
+                                    </h4>
+                                </>
+                            )}
+                        </Row>
+                    )}
                 </Col>
             </Row>
         </div>

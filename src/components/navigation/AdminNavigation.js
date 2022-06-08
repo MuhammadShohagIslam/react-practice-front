@@ -39,6 +39,11 @@ const AdminNavigation = () => {
                         Coupon
                     </Link>
                 </li>
+                <li className="nav-item">
+                    <Link to="/admin/wishlist" className="nav-link">
+                        WishList
+                    </Link>
+                </li>
 
                 <li className="nav-item">
                     <Link to="/admin/update-password" className="nav-link">

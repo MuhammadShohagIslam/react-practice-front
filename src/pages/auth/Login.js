@@ -1,14 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-// import { Button } from "antd";
 import { MailOutlined } from "@ant-design/icons";
-// import classes from "../../components/navigation/Header.module.css";
 import { toast } from "react-toastify";
 import { auth, googleAuthProvider } from "../../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { createOrUpdateUser } from "./../../functions/auth";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Login = () => {
     const [email, setEmail] = useState(
@@ -20,23 +19,22 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // const { user } = useSelector((state) => ({ ...state }));
+    const { user } = useSelector((state) => ({ ...state }));
 
-    // useEffect(() => {
-    //     if (user && user.token && user.role === "subscriber") {
-    //         <Navigate to ="/user/history"/>
-    //     }
-    //     if (user && user.token && user.role === "admin") {
-    //         <Navigate to ="/admin/dashbaord"/>
-    //     }
-    // }, [user, navigate]);
-
-    // if (user && user.token && user.role === "subscriber") {
-    //     return <p className="text-center">Loading...</p>;
-    // }
-    // if (user && user.token && user.role === "admin") {
-    //     return <p className="text-center">Loading...</p>;
-    // }
+    useEffect(() => {
+        let intended = location.state;
+        if (intended) {
+            return;
+        } else {
+            if (user && user.token && user.role === "admin") {
+                navigate("/admin/dashboard");
+            } else if (user && user.token && user.role === "subscriber") {
+                navigate("/user/history");
+            } else {
+                navigate("/login");
+            }
+        }
+    }, [user, navigate]);
 
     const navigateAdminOrUser = (data) => {
         const intendedPage = location.state;
@@ -46,9 +44,13 @@ const Login = () => {
             return;
         } else {
             if (data && data.role === "admin") {
-                navigate("/admin/dashboard");
+                setTimeout(() => {
+                    navigate("/admin/dashboard");
+                }, 300);
             } else {
-                navigate("/user/history");
+                setTimeout(() => {
+                    navigate("/user/history");
+                }, 300);
             }
         }
     };

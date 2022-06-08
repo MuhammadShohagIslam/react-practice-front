@@ -1,15 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Checkbox, Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import Star from "../components/forms/Star";
-import FilterMenu from "../components/navigation/FilterMenu";
-import ProductCard from "./../components/card/ProductCard";
 import { getListOfCategory } from "../functions/category";
 import {
     getFilterRelatedProducts,
     getProductsByCount,
 } from "../functions/product";
 import { getAllSubCategories } from "../functions/sub-category";
+import Star from "../components/forms/Star";
+import FilterMenu from "../components/navigation/FilterMenu";
+import ProductCard from "./../components/card/ProductCard";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenvo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
